@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: workouttrackerservice
+  datasource:
+    url: jdbc:postgresql://localhost:5432/workouttrackerdb?currentSchema=${spring.application.name}
+    username: root
+    password: secret
+  flyway:
+    schemas: ${spring.application.name}
+  jpa:
+    properties:
+      hibernate:
+        default_schema: ${spring.application.name}

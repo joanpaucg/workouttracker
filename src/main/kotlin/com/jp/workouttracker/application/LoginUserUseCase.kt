@@ -1,21 +1,18 @@
 package com.jp.workouttracker.application
-
-import com.example.workouttracker.repository.UserRepository
 import com.example.workouttracker.security.JwtUtil
-
-import org.springframework.beans.factory.annotation.Autowired
+import com.jp.workouttracker.domain.UserRepository
+import com.jp.workouttracker.domain.service.GenerateJwtTokenService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
+
 @Service
-class LoginUserUseCase (@Autowired private val userRepository: UserRepository,
-                        @Autowired private val passwordEncoder: PasswordEncoder,
-                        @Autowired private val jwtUtil: JwtUtil) {
+class LoginUserUseCase (private val userRepository: UserRepository,
+                        private val passwordEncoder: PasswordEncoder,
+                        private val generateJwtTokenService: GenerateJwtTokenService) {
     fun execute(username: String, password: String): String {
-        val user = userRepository.findByUsername(username)
-        if (user.isPresent && passwordEncoder.matches(password, user.get().password)) {
-            return jwtUtil.generateToken(username)
-        }
-        throw RuntimeException("Credenciales inválidas")
+        val user = userRepository.findByUsername(username)?.takeIf { passwordEncoder.matches(password, it.password) }
+            ?: throw RuntimeException("Credenciales inválidas")
+        return generateJwtTokenService.generateToken(username)
     }
 }
