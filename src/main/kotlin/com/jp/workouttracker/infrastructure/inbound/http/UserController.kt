@@ -23,7 +23,7 @@ class UserController(
         )
     }
     @PostMapping("/login")
-    fun login(@RequestParam username: String, @RequestParam password: String): String {
-        return loginUserUseCase.execute(username,password)
+    fun login(@RequestBody loginUser: RegisterUserResource): String {
+        return loginUserUseCase.execute(loginUser.username,loginUser.password)
     }
 }

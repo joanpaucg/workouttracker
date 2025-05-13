@@ -29,7 +29,11 @@ class SecurityConfig {
             .csrf { it.disable() } // Deshabilita CSRF si no es necesario
             .authorizeHttpRequests { requests ->
                 requests
-                    .requestMatchers("/users/register").permitAll() // Permite acceso público a /users/register
+                    .requestMatchers(
+                        "/users/register",
+                        "/users/login",
+                    )
+                    .permitAll() // Permite acceso público a /users/register
                     .anyRequest().authenticated() // Requiere autenticación para otras rutas
             }
             .httpBasic{} // Configura autenticación básica (opcional)
