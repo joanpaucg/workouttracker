@@ -1,6 +1,4 @@
 package com.jp.workouttracker.infrastructure.inbound.http
-
-import com.example.workouttracker.model.User
 import com.jp.workouttracker.application.LoginUserUseCase
 import com.jp.workouttracker.application.RegisterUserUseCase
 import com.jp.workouttracker.infrastructure.inbound.http.resource.RegisterUserResource
